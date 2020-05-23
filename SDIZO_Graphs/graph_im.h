@@ -12,16 +12,5 @@ public:
 	void print_graph() override;
 
 private:
-	enum edge_dir
-	{
-		START,
-		END
-	};
-
-	struct matrix_cell_
-	{
-		int weight;
-		edge_dir dir;
-	};
-	matrix_cell_*** inc_matrix_; // 2D array of pointers
+	int*** inc_matrix_; // 2D array of pointers to int
 };

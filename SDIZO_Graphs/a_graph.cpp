@@ -28,9 +28,9 @@ double a_graph::get_density()
 
 void a_graph::add_edge(int v_start, int v_end, int e_weight)
 {
-	if (!check_edge_good())
+	if (!check_num_edges_good())
 	{
-		throw graph_exception("Zbyt duzo krawedzi");
+		throw graph_exception("Zbyt duzo krawedzi w grafie");
 	}
 
 	if (!check_weight_good(e_weight))
@@ -80,6 +80,25 @@ bool a_graph::find_edge(int v_start, int v_end, int e_weight)
 	return true;
 }
 
+bool a_graph::has_edge(int v_start, int v_end)
+{
+	if (!check_vertex_good(v_start))
+	{
+		return false;
+	}
+
+	if (!check_vertex_good(v_end))
+	{
+		return false;
+	}
+
+	if (v_start == v_end)
+	{
+		return false;
+	}
+
+	return true;
+}
 
 
 bool a_graph::check_vertex_good(int v) const
@@ -87,7 +106,7 @@ bool a_graph::check_vertex_good(int v) const
 	return (v >= 0 && v < v_);
 }
 
-bool a_graph::check_edge_good() const
+bool a_graph::check_num_edges_good() const
 {
 	return (curr_edges_ >= 0 && curr_edges_ < e_);
 }

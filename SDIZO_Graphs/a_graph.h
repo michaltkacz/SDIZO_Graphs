@@ -8,7 +8,8 @@ public:
 
 	virtual void add_edge(int v_start, int v_end, int e_weight);
 	virtual bool find_edge(int v_start, int v_end, int e_weight);
-	
+	virtual bool has_edge(int v_start, int v_end);
+	virtual bool is_connected() = 0;
 	virtual void print_graph() = 0;
 
 	int get_v();
@@ -26,6 +27,6 @@ protected:
 	int curr_edges_ = 0;
 
 	bool check_vertex_good(int v) const;
-	bool check_edge_good() const;
+	bool check_num_edges_good() const;
 	bool check_weight_good(int w) const;
 };

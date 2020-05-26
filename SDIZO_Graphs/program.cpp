@@ -1,25 +1,24 @@
 ﻿#include "program.h"
 #include <cstdlib>
 #include <iostream>
-#include <fstream>
 #include <string>
 #include <conio.h>
-#include "graph_im.h"
 #include "graph_exception.h"
-#include "my_rand.h"
 #include <iomanip>
-#include "graph_al.h"
-
 
 program::program()
 {
-	g_im_ = nullptr;
-	g_al_ = nullptr;
+	g_dir_ = new my_graph_dir();
+	g_indir_ = new my_graph_indir();
 }
 
 program::~program()
 {
-	delete_current_graph();
+	delete g_dir_;
+	g_dir_ = nullptr;
+	
+	delete g_indir_;
+	g_dir_ = nullptr;
 }
 
 void program::run()
@@ -27,7 +26,88 @@ void program::run()
 	char option;
 	do {
 		system("cls");
-		print_main_menu();
+		std::cout << std::endl;
+		std::cout << "====================== MENU GLOWNE =====================" << std::endl;
+		std::cout << "0.Wyjscie" << std::endl;
+		std::cout << "  |Zakonczenie programu" << std::endl;
+		std::cout << "9.Uruchom testy algorytmow" << std::endl;
+		std::cout << "  |Automatyczne testy zaimplementowanych algorytmow." << std::endl;
+		std::cout << "  |Wymaga okolo XX minut na wykonanie." << std::endl;
+		std::cout << "  |Wyniki sa zapisywane do plikow" << std::endl;
+		std::cout << "------------------------- DANE -------------------------" << std::endl;
+		std::cout << "1.Wczytaj dane z pliku" << std::endl;
+		std::cout << "2.Wygeneruj graf losowo" << std::endl;
+		std::cout << "3.Wyswietl graf listowo i macierzowo na ekranie" << std::endl;
+		std::cout << "----- WYZNACZANIE MINIMALNEGO DRZEWA ROZPINAJACEGO -----" << std::endl;
+		std::cout << "  |Algorytmy wykonuja sie dwukrotnie na grafie" << std::endl;
+		std::cout << "  |nieskierowanym: raz na reprezentacji listowej" << std::endl;
+		std::cout << "  |i raz na macierzowej oraz wyswietlane sa wyniki." << std::endl;
+		std::cout << "4.Algorytm Prima" << std::endl;
+		std::cout << "5.Algorytm Kruskala" << std::endl;
+		std::cout << "------------ WYZNACZANIE NAJKROTSZEJ SCIEZKI -----------" << std::endl;
+		std::cout << "  |Algorytmy wykonuja sie dwukrotnie na grafie" << std::endl;
+		std::cout << "  |skierowanym: raz na reprezentacji listowej" << std::endl;
+		std::cout << "  |i raz na macierzowej oraz wyswietlane sa wyniki." << std::endl;
+		std::cout << "6.Algorytm Dijkstry" << std::endl;
+		std::cout << "7.Algorytm Forda-Bellmana" << std::endl;
+		std::cout << "========================================================" << std::endl;
+		std::cout << "Podaj opcje:";
+		option = _getche();
+		std::cout << std::endl;
+
+		switch (option) {
+		case '1':
+			run_graph_load_from_file_menu();
+			break;
+		case '2':		
+			run_graph_generation_menu();
+			break;
+		case '3':
+			run_print_graph_menu();
+			break;
+		case '4':
+
+			break;
+		case '5':
+
+			break;
+		case '6':
+
+			break;
+		case '7':
+
+			break;
+		case '9':
+			//run test
+			break;
+		case '0':
+			std::cout << "Koniec." << std::endl;
+			break;
+		default: 
+			break;
+		}
+		
+	} while (option != '0');
+
+}
+
+void program::run_tests()
+{
+}
+
+void program::run_graph_load_from_file_menu()
+{
+	char option;
+	do {
+		system("cls");
+		std::cout << std::endl;
+		std::cout << "====================== MENU PLIKU ======================" << std::endl;
+		std::cout << "0.Powrot" << std::endl;
+		std::cout << "--------------------------------------------------------" << std::endl;
+		std::cout << "1.Wczytaj dane do grafu skierowanego" << std::endl;
+		std::cout << "2.Wczytaj dane do grafu nieskierowanego" << std::endl;
+		std::cout << "========================================================" << std::endl;
+		std::cout << "Podaj opcje:";
 		option = _getche();
 		std::cout << std::endl;
 
@@ -40,11 +120,12 @@ void program::run()
 
 			try
 			{
-				delete_current_graph();
-				load_graph_from_file(file_name);
+				g_dir_->remove();
+				g_dir_->load_from_file(file_name);
 				std::cout << "Dane zostaly wczytane." << std::endl;
+				g_dir_->is_connected(); //todelete
 			}
-			catch(graph_exception& e)
+			catch (graph_exception& e)
 			{
 				std::cout << "Blad: ";
 				std::cout << e.what() << std::endl;
@@ -53,13 +134,71 @@ void program::run()
 			wait_for_key();
 			break;
 		}
-		case '2':		
+		case '2':
+		{
+			std::cout << "Podaj nazwe pliku z roszerzeniem: ";
+			std::string file_name;
+			std::cin >> file_name;
+
 			try
 			{
-				delete_current_graph();
-				create_random_graph();
-				print_graph_parameters();
+				g_indir_->remove();
+				g_indir_->load_from_file(file_name);
+				std::cout << "Dane zostaly wczytane." << std::endl;
+
+				g_indir_->is_connected(); //todelete
+			}
+			catch (graph_exception& e)
+			{
+				std::cout << "Blad: ";
+				std::cout << e.what() << std::endl;
+				std::cout << "Wczytywanie grafu przerwane!" << std::endl;
+			}
+			wait_for_key();
+			break;
+		}
+		default:
+			break;
+		}
+
+	} while (option != '0');
+}
+
+void program::run_graph_generation_menu()
+{
+	char option;
+	do {
+		system("cls");
+		std::cout << std::endl;
+		std::cout << "==================== MENU GENEROWANIA ==================" << std::endl;
+		std::cout << "0.Powrot" << std::endl;
+		std::cout << "--------------------------------------------------------" << std::endl;
+		std::cout << "1.Wygeneruj graf skierowany (parametry uzytkownika)" << std::endl;
+		std::cout << "2.Wygeneruj graf nieskierowany (parametry uzytkownika)" << std::endl;
+		std::cout << "--------------------------------------------------------" << std::endl;
+		std::cout << "3.Wygeneruj graf skierowany (parametry losowe)" << std::endl;
+		std::cout << "4.Wygeneruj graf nieskierowany (parametry losowe)" << std::endl;
+		std::cout << "========================================================" << std::endl;
+		std::cout << "Podaj opcje:";
+		option = _getche();
+		std::cout << std::endl;
+
+		switch (option) {
+		case '1':
+			std::cout << "TODO" << std::endl;
+			break;
+		case '2':
+			std::cout << "TODO" << std::endl;
+			break;
+		case '3':
+			try
+			{
+				g_dir_->remove();
+				g_dir_->random();
+				g_dir_->print_parameters();
 				std::cout << "Graf zostal wygenerowany." << std::endl;
+
+				g_dir_->is_connected(); //todelete
 			}
 			catch (graph_exception& e)
 			{
@@ -69,12 +208,56 @@ void program::run()
 			}
 			wait_for_key();
 			break;
-		case '3':
+		case '4':
 			try
 			{
-				print_graph();
+				g_indir_->remove();
+				g_indir_->random();
+				g_indir_->print_parameters();
+				std::cout << "Graf zostal wygenerowany." << std::endl;
+				
+				g_indir_->is_connected(); //todelete
 			}
-			catch(graph_exception& e)
+			catch (graph_exception& e)
+			{
+				std::cout << "Blad: ";
+				std::cout << e.what() << std::endl;
+				std::cout << "Tworzenie grafu przerwane!" << std::endl;
+			}
+			wait_for_key();
+			break;
+		default:
+			break;
+		}
+
+	} while (option != '0');
+}
+
+void program::run_print_graph_menu()
+{
+	char option;
+	do {
+		system("cls");
+		std::cout << std::endl;
+		std::cout << "===================== MENU WYPISANIA ===================" << std::endl;
+		std::cout << "0.Powrot" << std::endl;
+		std::cout << "--------------------------------------------------------" << std::endl;
+		std::cout << "1.Wyswietl graf skierowany" << std::endl;
+		std::cout << "2.Wyswietl graf nieskierowany" << std::endl;
+		std::cout << "2.Wyswietl oba grafy" << std::endl;
+		std::cout << "========================================================" << std::endl;
+		std::cout << "Podaj opcje:";
+		option = _getche();
+		std::cout << std::endl;
+
+		switch (option) {
+		case '1':
+			try
+			{
+				g_dir_->print_parameters();
+				g_dir_->print_graph();
+			}
+			catch (graph_exception& e)
 			{
 				std::cout << "Blad: ";
 				std::cout << e.what() << std::endl;
@@ -82,186 +265,68 @@ void program::run()
 			}
 			wait_for_key();
 			break;
-		case '4':
+		case '2':
 			try
 			{
-				print_graph_parameters();
+				g_indir_->print_parameters();
+				g_indir_->print_graph();
 			}
 			catch (graph_exception& e)
 			{
 				std::cout << "Blad: ";
 				std::cout << e.what() << std::endl;
-				std::cout << "Wypisanie parametrow przerwane!" << std::endl;
+				std::cout << "Wypisanie grafu przerwane!" << std::endl;
 			}
 			wait_for_key();
 			break;
-		case '5':
-
-			break;
-		case '6':
-
-			break;
-		case '7':
-
-			break;
-		case '8':
-
-			break;
-		case '9':
-			//run test
-			break;
-		case '0':
-			std::cout << "Koniec." << std::endl;
-			break;
-		}
-		
-	} while (option != '0');
-
-}
-
-void program::print_main_menu() const
-{
-	std::cout << std::endl;
-	std::cout << "====================== MENU GLOWNE =====================" << std::endl;
-	std::cout << "0.Wyjscie" << std::endl;
-	std::cout << "9.Uruchom testy algorytmow (wymaga okolo XX minut)" << std::endl;
-	std::cout << "------------------------- DANE -------------------------" << std::endl;
-	std::cout << "1. Wczytaj dane z pliku" << std::endl;
-	std::cout << "2. Wygeneruj graf losowo" << std::endl;
-	std::cout << "3. Wyswietl graf listowo i macierzowo na ekranie" << std::endl;
-	std::cout << "4. Wyswietl parametry grafu" << std::endl;
-	std::cout << "----- WYZNACZANIE MINIMALNEGO DRZEWA ROZPINAJACEGO -----" << std::endl;
-	std::cout << "5. Algorytm Prima" << std::endl;
-	std::cout << "6. Algorytm Kruskala" << std::endl;
-	std::cout << "------------ WYZNACZANIE NAJKROTSZEJ SCIEZKI -----------" << std::endl;
-	std::cout << "7. Algorytm Dijkstry" << std::endl;
-	std::cout << "8. Algorytm Forda-Bellmana" << std::endl;
-	std::cout << "========================================================" << std::endl;
-	std::cout << "Podaj opcje:";
-}
-
-void program::delete_current_graph()
-{
-	delete g_im_;
-	g_im_ = nullptr;
-
-	delete g_al_;
-	g_al_ = nullptr;
-}
-
-bool program::graph_exists()
-{
-	return (g_im_ != nullptr && g_al_ != nullptr);
-}
-
-void program::create_random_graph()
-{
-	const int min_dens = 1;
-	const int max_dens = 100;
-
-	const int min_vert = 5;
-	const int max_vert = 21;
-
-	const int min_weight = 0;
-	const int max_weight = 100;
-
-	const double density = my_rand::random_percent(min_dens, max_dens);
-	const int v_number = my_rand::random_int(min_vert, max_vert);
-	const int e_number = a_graph::calculate_edges(v_number, density);
-
-	g_im_ = new graph_im(v_number, e_number);
-	g_al_ = new graph_al(v_number, e_number);
-	for (int i = 0; i < e_number; i++)
-	{
-		int v_start = my_rand::random_int(0, v_number);
-		int v_end = my_rand::random_int(0, v_number);
-		int e_weight = my_rand::random_int(min_weight, max_weight);
-
-		while (g_im_->find_edge(v_start, v_end, e_weight) || v_start == v_end)
-		{
-			v_start = my_rand::random_int(0, v_number);
-			v_end = my_rand::random_int(0, v_number);
-			e_weight = my_rand::random_int(min_weight, max_weight);
-		}
-
-		try
-		{
-			g_im_->add_edge(v_start, v_end, e_weight);
-			g_al_->add_edge(v_start, v_end, e_weight);
-		}
-		catch (graph_exception& e)
-		{
-			throw e;
-		}
-	}
-}
-
-void program::load_graph_from_file(std::string file_name)
-{
-	std::ifstream fin(file_name);
-	if (fin.is_open())
-	{
-		int e = 0;
-		int v = 0;
-		int v_start = 0;
-		int v_end = 0;
-		int w = 0;
-
-		fin >> e;
-		fin >> v;
-		try
-		{
-			g_im_ = new graph_im(v, e);
-			g_al_ = new graph_al(v, e);
-
-			while (!fin.eof())
+		case '3':
+			try
 			{
-				fin >> v_start;
-				fin >> v_end;
-				fin >> w;
-
-				g_im_->add_edge(v_start, v_end, w);
-				g_al_->add_edge(v_start, v_end, w);
+				g_dir_->print_parameters();
+				g_dir_->print_graph();
 			}
+			catch (graph_exception& e)
+			{
+				std::cout << "Blad: ";
+				std::cout << e.what() << std::endl;
+				std::cout << "Wypisanie grafu przerwane!" << std::endl;
+			}
+
+			try
+			{
+				g_indir_->print_parameters();
+				g_indir_->print_graph();
+			}
+			catch (graph_exception& e)
+			{
+				std::cout << "Blad: ";
+				std::cout << e.what() << std::endl;
+				std::cout << "Wypisanie grafu przerwane!" << std::endl;
+			}
+			wait_for_key();
+			break;
+		default:
+			break;
 		}
-		catch(graph_exception& e)
-		{
-			fin.close();
-			throw e;
-		}
-		fin.close();
-	}
-	else
-	{
-		throw graph_exception("Podany plik nie istnieje!");
-	}
+
+	} while (option != '0');
 }
 
-void program::print_graph()
+void program::run_prim_menu()
 {
-	if(!graph_exists())
-	{
-		throw graph_exception("Graf nie istnieje");
-	}
-
-	print_graph_parameters();
-	g_im_->print_graph();
-	g_al_->print_graph();
 }
 
-void program::print_graph_parameters()
-{	
-	if (!graph_exists())
-	{
-		throw graph_exception("Graf nie istnieje");
-	}
-
-	std::cout << "Parametry grafu: dens: ";
-	std::cout << std::setprecision(2) << g_im_->get_density() << ", v: ";
-	std::cout << g_im_->get_v() << ", e: ";
-	std::cout << g_im_->get_e() << "." << std::endl;
+void program::run_kruskal_menu()
+{
 }
 
+void program::run_dijkstra_menu()
+{
+}
+
+void program::run_ford_bellman_menu()
+{
+}
 
 void program::wait_for_key()
 {
@@ -270,5 +335,3 @@ void program::wait_for_key()
 	std::cin.clear();
 	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
-
-

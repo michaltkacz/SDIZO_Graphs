@@ -1,31 +1,34 @@
 ﻿#pragma once
-#include "graph_im.h"
-#include <string>
-#include "graph_al.h"
+#include "my_graph.h"
+#include "my_graph_indir.h"
+#include "my_graph_dir.h"
 
 class program
 {
 public:
 	program();
-		~program();
+	~program();
 
-	
 	void run();
 
 private:
-	void print_main_menu() const;
+	my_graph_dir* g_dir_;
+	my_graph_indir* g_indir_;
+
+
+	void run_tests();
+
+	void run_graph_load_from_file_menu();
+	void run_graph_generation_menu();
+	void run_print_graph_menu();
+	
+	void run_prim_menu();
+	void run_kruskal_menu();
+	
+	void run_dijkstra_menu();
+	void run_ford_bellman_menu();
+	
+
 	void wait_for_key();
-
-	void delete_current_graph();
-	void create_random_graph();
-	void load_graph_from_file(std::string file_name);
-
-	void print_graph();
-	void print_graph_parameters();
-
-	bool graph_exists();
-
-	graph_im* g_im_;
-	graph_al* g_al_;
 
 };

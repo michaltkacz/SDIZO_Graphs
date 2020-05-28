@@ -3,6 +3,7 @@
 #include <iostream>
 #include <iomanip>
 #include <stack>
+#include "graph_al_indir.h"
 
 graph_al_dir::graph_al_dir(int v, int e) : a_graph_al(v, e)
 {
@@ -26,36 +27,28 @@ void graph_al_dir::add_edge(int v_start, int v_end, int e_weight)
 
 bool graph_al_dir::is_connected()
 {
-	//dziala ?????????????????????????????????????????????? bo w sumie to nie wiem
-	// NIE DZIALA, POPRAWIC
-	auto visited = new bool[v_] {false};
-	int visited_counter = 0;
-	std::stack<int> vertices;
+	auto g_indir = new graph_al_indir(v_, e_);
 
-	vertices.push(0);
-	visited[0] = true;
-
-	while (!vertices.empty())
+	for(int i=0; i< v_; i++)
 	{
-		int v = vertices.top();
-		vertices.pop();
-		visited_counter++;
-
-		auto neighbour = adj_list_[v];
-		while (neighbour)
+		auto ls = adj_list_[i];
+		while(ls)
 		{
-			int u = neighbour->v_end;
-			if (!visited[u])
-			{
-				visited[u] = true;
-				vertices.push(u);
-			}
-			neighbour = neighbour->next;
-		}
-	}
-	delete[] visited;
+			int v_start = i;
+			int v_end = ls->v_end;
+			int e_weight = ls->weight;
 
-	return (visited_counter == v_);
+			if (!g_indir->has_edge(v_start, v_end))
+			{
+				g_indir->add_edge(v_start, v_end, e_weight);
+			}
+			ls = ls->next;
+		}	
+	}
+
+	bool is_connected = g_indir->is_connected();
+	delete g_indir;
+	return is_connected;
 }
 
 void graph_al_dir::print_graph()

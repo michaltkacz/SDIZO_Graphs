@@ -14,7 +14,7 @@ public:
 	void remove() override;
 
 	void random() override;
-	//void load_from_file(const std::string& file_name) override;
+	void random(int v_number, int density) override;
 
 	void print_graph() override;
 	void print_parameters() override;

@@ -37,71 +37,87 @@ void my_graph_dir::remove()
 
 void my_graph_dir::random()
 {
-	const double density = my_rand::random_percent(min_dens, max_dens);
-	const int v_number = my_rand::random_int(min_vert, max_vert);
-	const int e_number = a_graph::calculate_edges(v_number, density);
+	my_graph::random();
+}
 
-	init(v_number, e_number);
-	for (int i = 0; i < e_number; i++)
+//void my_graph_dir::random()
+//{
+//	const double density = my_rand::random_percent(min_dens, max_dens);
+//	const int v_number = my_rand::random_int(min_vert, max_vert);
+//	const int e_number = a_graph::calculate_edges(v_number, density);
+//
+//	init(v_number, e_number);
+//	for (int i = 0; i < e_number; i++)
+//	{
+//		int v_start = my_rand::random_int(0, v_number);
+//		int v_end = my_rand::random_int(0, v_number);
+//		int e_weight = my_rand::random_int(min_weight, max_weight);
+//
+//		while (g_im_dir_->has_edge(v_start, v_end) || v_start == v_end)
+//		{
+//			v_start = my_rand::random_int(0, v_number);
+//			v_end = my_rand::random_int(0, v_number);
+//			e_weight = my_rand::random_int(min_weight, max_weight);
+//		}
+//
+//		try
+//		{
+//			add_edge(v_start, v_end, e_weight);
+//		}
+//		catch (graph_exception& e)
+//		{
+//			throw e;
+//		}
+//	}
+//}
+
+void my_graph_dir::random(int v_number, int density)
+{
+	try
 	{
-		int v_start = my_rand::random_int(0, v_number);
-		int v_end = my_rand::random_int(0, v_number);
-		int e_weight = my_rand::random_int(min_weight, max_weight);
+		my_graph::random(v_number, density);
+	}
+	catch (graph_exception& e)
+	{
+		throw e;
+	}
 
-		while (g_im_dir_->has_edge(v_start, v_end) || v_start == v_end)
-		{
-			v_start = my_rand::random_int(0, v_number);
-			v_end = my_rand::random_int(0, v_number);
-			e_weight = my_rand::random_int(min_weight, max_weight);
-		}
+	const int e_number = a_graph::calculate_edges(v_number, density / 100.f);
 
-		try
-		{
-			add_edge(v_start, v_end, e_weight);
-		}
-		catch (graph_exception& e)
-		{
-			throw e;
-		}
+	if(e_number < v_number-1)
+	{
+		throw graph_exception("Parametry nie pozwalaja wygenerowac grafu spojnego!");
 	}
 
 
-	//double density = 0;
-	//int v_number = 0;
-	//int e_number = 0;
-	//do
-	//{
-	//	density = my_rand::random_percent(min_dens, max_dens);
-	//	v_number = my_rand::random_int(min_vert, max_vert);
-	//	e_number = a_graph::calculate_edges(v_number, density);
-	//	
-	//} while (v_number > e_number); //potrzeba min
+	do
+	{
+		init(v_number, e_number);
+		for (int i = 0; i < e_number; i++)
+		{
+			int v_start = my_rand::random_int(0, v_number);
+			int v_end = my_rand::random_int(0, v_number);
+			int e_weight = my_rand::random_int(min_weight, max_weight);
 
+			while (g_im_dir_->has_edge(v_start, v_end) || v_start == v_end)
+			{
+				v_start = my_rand::random_int(0, v_number);
+				v_end = my_rand::random_int(0, v_number);
+				e_weight = my_rand::random_int(min_weight, max_weight);
+			}
 
-	//init(v_number, e_number);
-	//for (int i = 0; i < e_number; i++)
-	//{
-	//	int v_start = my_rand::random_int(0, v_number);
-	//	int v_end = my_rand::random_int(0, v_number);
-	//	int e_weight = my_rand::random_int(min_weight, max_weight);
-
-	//	while (g_im_dir_->has_edge(v_start, v_end) || v_start == v_end)
-	//	{
-	//		v_start = my_rand::random_int(0, v_number);
-	//		v_end = my_rand::random_int(0, v_number);
-	//		e_weight = my_rand::random_int(min_weight, max_weight);
-	//	}
-
-	//	try
-	//	{
-	//		add_edge(v_start, v_end, e_weight);
-	//	}
-	//	catch (graph_exception& e)
-	//	{
-	//		throw e;
-	//	}
-	//}
-
+			try
+			{
+				add_edge(v_start, v_end, e_weight);
+			}
+			catch (graph_exception& e)
+			{
+				throw e;
+			}
+		}
+		std::cout << "Wygenerowano" << std::endl;
+	} while (!g_im_dir_->is_connected());
+	std::cout << "Sukces" << std::endl;
 }
 
 void my_graph_dir::print_graph()

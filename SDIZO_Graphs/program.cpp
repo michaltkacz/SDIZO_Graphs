@@ -23,31 +23,29 @@ program::~program()
 
 void program::run()
 {
+	std::cout << "===================== UWAGA WSTEPNA =====================" << std::endl;
+	std::cout << "Opis dzialania poszczegolnych opcji oraz wszelkie" << std::endl;
+	std::cout << "zalozenia, ktore musza spelniac grafy zostaly opisane" << std::endl;
+	std::cout << "w zalaczonym do projektu sprawozdaniu. Przed rozpoczeciem" << std::endl;
+	std::cout << "testowania programu prosze o zapoznanie sie z dokumentem." << std::endl;
+	std::cout << "---------------------------------------------------------" << std::endl;
+	wait_for_key();
+
 	char option;
 	do {
 		system("cls");
 		std::cout << std::endl;
 		std::cout << "====================== MENU GLOWNE =====================" << std::endl;
 		std::cout << "0.Wyjscie" << std::endl;
-		std::cout << "  |Zakonczenie programu" << std::endl;
 		std::cout << "9.Uruchom testy algorytmow" << std::endl;
-		std::cout << "  |Automatyczne testy zaimplementowanych algorytmow." << std::endl;
-		std::cout << "  |Wymaga okolo XX minut na wykonanie." << std::endl;
-		std::cout << "  |Wyniki sa zapisywane do plikow" << std::endl;
 		std::cout << "------------------------- DANE -------------------------" << std::endl;
 		std::cout << "1.Wczytaj dane z pliku" << std::endl;
 		std::cout << "2.Wygeneruj graf losowo" << std::endl;
 		std::cout << "3.Wyswietl graf listowo i macierzowo na ekranie" << std::endl;
 		std::cout << "----- WYZNACZANIE MINIMALNEGO DRZEWA ROZPINAJACEGO -----" << std::endl;
-		std::cout << "  |Algorytmy wykonuja sie dwukrotnie na grafie" << std::endl;
-		std::cout << "  |nieskierowanym: raz na reprezentacji listowej" << std::endl;
-		std::cout << "  |i raz na macierzowej oraz wyswietlane sa wyniki." << std::endl;
 		std::cout << "4.Algorytm Prima" << std::endl;
 		std::cout << "5.Algorytm Kruskala" << std::endl;
 		std::cout << "------------ WYZNACZANIE NAJKROTSZEJ SCIEZKI -----------" << std::endl;
-		std::cout << "  |Algorytmy wykonuja sie dwukrotnie na grafie" << std::endl;
-		std::cout << "  |skierowanym: raz na reprezentacji listowej" << std::endl;
-		std::cout << "  |i raz na macierzowej oraz wyswietlane sa wyniki." << std::endl;
 		std::cout << "6.Algorytm Dijkstry" << std::endl;
 		std::cout << "7.Algorytm Forda-Bellmana" << std::endl;
 		std::cout << "========================================================" << std::endl;
@@ -185,11 +183,53 @@ void program::run_graph_generation_menu()
 
 		switch (option) {
 		case '1':
-			std::cout << "TODO" << std::endl;
+		{
+			int v = 0;
+			int d = 0;
+			std::cout << "Podaj liczbe wierzcholkow (5-50)\nv=";
+			std::cin >> v;
+			std::cout << "Podaj gestosc(1-99)\nd=";
+			std::cin >> d;
+			try
+			{
+				g_dir_->remove();
+				g_dir_->random(v, d);
+				g_dir_->print_parameters();
+				std::cout << "Graf zostal wygenerowany." << std::endl;
+			}
+			catch (graph_exception& e)
+			{
+				std::cout << "Blad: ";
+				std::cout << e.what() << std::endl;
+				std::cout << "Tworzenie grafu przerwane!" << std::endl;
+			}
+			wait_for_key();
 			break;
+		}
 		case '2':
-			std::cout << "TODO" << std::endl;
+		{
+			int v = 0;
+			int d = 0;
+			std::cout << "Podaj liczbe wierzcholkow (0-50)\nv=";
+			std::cin >> v;
+			std::cout << "Podaj gestosc(1-99)\nd=";
+			std::cin >> d;
+			try
+			{
+				g_indir_->remove();
+				g_indir_->random(v, d);
+				g_indir_->print_parameters();
+				std::cout << "Graf zostal wygenerowany." << std::endl;
+			}
+			catch (graph_exception& e)
+			{
+				std::cout << "Blad: ";
+				std::cout << e.what() << std::endl;
+				std::cout << "Tworzenie grafu przerwane!" << std::endl;
+			}
+			wait_for_key();
 			break;
+		}
 		case '3':
 			try
 			{

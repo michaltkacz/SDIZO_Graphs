@@ -5,6 +5,27 @@
 #include <iomanip>
 
 
+void my_graph::random()
+{
+	const int v_number = my_rand::random_int(min_vert, max_vert);
+	const int density = my_rand::random_int(min_dens, max_dens);
+	random(v_number, density);
+}
+
+void my_graph::random(int v_number, int density)
+{
+	if (v_number < min_vert || v_number >= max_vert)
+	{
+		throw graph_exception("Liczba wierzcholkow poza zakresem! (5-50)");
+	}
+
+	if(density < min_dens || density >= max_dens)
+	{
+		throw graph_exception("Gestosc poza zakresem! (1%-99%)");
+	}
+
+}
+
 void my_graph::load_from_file(const std::string& file_name)
 {
 	std::ifstream fin(file_name);

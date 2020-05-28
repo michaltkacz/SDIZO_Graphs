@@ -37,33 +37,54 @@ void my_graph_indir::remove()
 
 void my_graph_indir::random()
 {
-	const double density = my_rand::random_percent(min_dens, max_dens);
-	const int v_number = my_rand::random_int(min_vert, max_vert);
-	const int e_number = a_graph::calculate_edges(v_number, density);
+	my_graph::random();
+}
 
-	init(v_number, e_number);
-	for (int i = 0; i < e_number; i++)
+void my_graph_indir::random(int v_number, int density)
+{
+	try
 	{
-		int v_start = my_rand::random_int(0, v_number);
-		int v_end = my_rand::random_int(0, v_number);
-		int e_weight = my_rand::random_int(min_weight, max_weight);
-
-		while (g_im_indir_->has_edge(v_start, v_end) || v_start == v_end)
-		{
-			v_start = my_rand::random_int(0, v_number);
-			v_end = my_rand::random_int(0, v_number);
-			e_weight = my_rand::random_int(min_weight, max_weight);
-		}
-
-		try
-		{
-			add_edge(v_start, v_end, e_weight);
-		}
-		catch (graph_exception& e)
-		{
-			throw e;
-		}
+		my_graph::random(v_number, density);
+	}catch (graph_exception& e)
+	{
+		throw e;
 	}
+
+	const int e_number = a_graph::calculate_edges(v_number, density/100.f);
+
+	if (e_number < v_number - 1)
+	{
+		throw graph_exception("Parametry nie pozwalaja wygenerowac grafu spojnego!");
+	}
+
+	do
+	{
+		init(v_number, e_number);
+		for (int i = 0; i < e_number; i++)
+		{
+			int v_start = my_rand::random_int(0, v_number);
+			int v_end = my_rand::random_int(0, v_number);
+			int e_weight = my_rand::random_int(min_weight, max_weight);
+
+			while (g_im_indir_->has_edge(v_start, v_end) || v_start == v_end)
+			{
+				v_start = my_rand::random_int(0, v_number);
+				v_end = my_rand::random_int(0, v_number);
+				e_weight = my_rand::random_int(min_weight, max_weight);
+			}
+
+			try
+			{
+				add_edge(v_start, v_end, e_weight);
+			}
+			catch (graph_exception& e)
+			{
+				throw e;
+			}
+		}
+		std::cout << "Wygenerowano" << std::endl;
+	} while (!g_im_indir_->is_connected());
+	std::cout << "Sukces" << std::endl;
 }
 
 void my_graph_indir::print_graph()

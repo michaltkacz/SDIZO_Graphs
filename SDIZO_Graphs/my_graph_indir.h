@@ -22,8 +22,8 @@ public:
 	bool exists() override;
 	bool is_connected() override;
 
-	void mst_prim_al(int v_start);
-	void mst_prim_im(int v_start);
+	void mst_prim_al();
+	void mst_prim_im();
 
 	void mst_kruskal_al();
 	void mst_kruskal_im();

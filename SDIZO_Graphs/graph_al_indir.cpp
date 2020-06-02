@@ -70,10 +70,11 @@ void graph_al_indir::print_graph()
 	a_graph_al::print_graph();
 }
 
-void graph_al_indir::mst_prim(int v_start)
+void graph_al_indir::mst_prim()
 {
 	using namespace std;
 	const int NIL = -1;
+	int v_start = 0;
 	auto key = new int[v_];
 	auto p = new int[v_];
 	auto in_mst = new bool[v_];

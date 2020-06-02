@@ -83,10 +83,120 @@ void graph_im_dir::print_graph()
 
 void graph_im_dir::spf_dijksra(int v_start, int v_end)
 {
-	//TODO
+	if (!a_graph::check_vertex_good(v_start))
+	{
+		throw graph_exception("Wierzcholek poczatkowy nie istnieje");
+	}
+
+	if (!a_graph::check_vertex_good(v_end) && v_end != -1)
+	{
+		throw graph_exception("Wierzcholek koncowy nie istnieje");
+	}
+
+	using namespace std;
+	const int NIL = -1;
+	const int INF = 1000000;
+	auto d = new int[v_];
+	auto p = new int[v_];
+	auto qs = new bool[v_];
+	for (int i = 0; i < v_; i++)
+	{
+		d[i] = INF;
+		p[i] = NIL;
+		qs[i] = false;
+	}
+	d[v_start] = 0;
+
+	int j = 0;
+	int u = 0;
+	for (int i = 0; i < v_; i++)
+	{
+
+		for (j = 0; qs[j]; j++);
+		for (u = j++; j < v_; j++)
+		{
+			if (!qs[j] && (d[j] < d[u]))
+			{
+				u = j;
+			}
+		}
+
+		qs[u] = true;
+
+		// O__O
+		for(int x =0; x<e_; x++)
+		{
+			if(inc_matrix_[u][x] != nullptr)
+			{
+				if (*inc_matrix_[u][x] >= 0)
+				{
+					for(int y = 0; y<v_; y++)
+					{
+						if(y != u && inc_matrix_[y][x] != nullptr)
+						{
+							if(*inc_matrix_[y][x] <= 0)
+							{
+								if (!qs[y] && (d[y] > d[u] + *inc_matrix_[u][x]))
+								{
+									d[y] = d[u] + *inc_matrix_[u][x];
+									p[y] = u;
+									break;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	if (v_end == -1)
+	{
+		std::cout << "V poczatkowy | V koncowy | Droga" << std::endl;
+		for (int i = 0; i < v_; i++)
+		{
+			std::cout << std::setw(3) << v_start;
+			std::cout << std::setw(3) << i;
+			if (d[i] == INF)
+			{
+				std::cout << std::setw(5) << "-" << std::endl;
+			}
+			else
+			{
+				std::cout << std::setw(5) << d[i] << std::endl;
+			}
+		}
+	}
+	else
+	{
+		std::cout << "Droga z wierzcholka " << v_start;
+		std::cout << " do wierzcholka " << v_end;
+		std::cout << " wynosi: ";
+		if (d[v_end] == INF)
+		{
+			std::cout << "-" << std::endl;
+		}
+		else
+		{
+			std::cout << d[v_end] << std::endl;
+		}
+	}
+
+	delete[] d;
+	delete[] p;
+	delete[] qs;
 }
 
 void graph_im_dir::spf_ford_bellman(int v_start, int v_end)
 {
+	if (!a_graph::check_vertex_good(v_start))
+	{
+		throw graph_exception("Wierzcholek poczatkowy nie istnieje");
+	}
+
+	if (!a_graph::check_vertex_good(v_end) && v_end != -1)
+	{
+		throw graph_exception("Wierzcholek koncowy nie istnieje");
+	}
 	//TODO
 }

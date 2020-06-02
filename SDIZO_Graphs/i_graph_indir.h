@@ -3,7 +3,7 @@
 class i_graph_indir
 {
 public:
-	virtual void mst_prim(int v_start) = 0;
+	virtual void mst_prim() = 0;
 	virtual void mst_kruskal() = 0;
 
 protected:

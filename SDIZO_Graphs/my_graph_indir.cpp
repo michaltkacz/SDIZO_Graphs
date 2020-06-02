@@ -126,14 +126,14 @@ bool my_graph_indir::is_connected()
 	return g_al_indir_->is_connected();
 }
 
-void my_graph_indir::mst_prim_al(int v_start)
+void my_graph_indir::mst_prim_al()
 {
-	g_al_indir_->mst_prim(v_start);
+	g_al_indir_->mst_prim();
 }
 
-void my_graph_indir::mst_prim_im(int v_start)
+void my_graph_indir::mst_prim_im()
 {
-	g_im_indir_->mst_prim(v_start);
+	g_im_indir_->mst_prim();
 }
 
 void my_graph_indir::mst_kruskal_al()

@@ -11,6 +11,6 @@ public:
 	bool is_connected() override;
 	void print_graph() override;
 
-	void mst_prim(int v_start) override;
+	void mst_prim() override;
 	void mst_kruskal() override;
 };

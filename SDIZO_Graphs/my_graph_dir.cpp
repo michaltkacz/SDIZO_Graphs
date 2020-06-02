@@ -128,18 +128,50 @@ bool my_graph_dir::is_connected()
 
 void my_graph_dir::spf_dijkstra_al(int v_start, int v_end)
 {
+	try
+	{
+		g_al_dir_->spf_dijksra(v_start, v_end);
+	}catch(graph_exception& e)
+	{
+		throw e;
+	}
+	
 }
 
 void my_graph_dir::spf_dijkstra_im(int v_start, int v_end)
 {
+	try
+	{
+		g_im_dir_->spf_dijksra(v_start, v_end);
+	}
+	catch (graph_exception& e)
+	{
+		throw e;
+	}
 }
 
 void my_graph_dir::spf_ford_bellman_al(int v_start, int v_end)
-{
+{	
+	try
+	{
+		g_al_dir_->spf_ford_bellman(v_start, v_end);
+	}
+	catch (graph_exception& e)
+	{
+		throw e;
+	}
 }
 
 void my_graph_dir::spf_ford_bellman_im(int v_start, int v_end)
 {
+	try
+	{
+		g_im_dir_->spf_ford_bellman(v_start, v_end);
+	}
+	catch (graph_exception& e)
+	{
+		throw e;
+	}
 }
 
 void my_graph_dir::add_edge(int v_start, int v_end, int e_weight)

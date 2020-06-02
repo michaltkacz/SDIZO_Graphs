@@ -382,7 +382,7 @@ void program::run_prim_menu()
 		case '1':
 			if(g_indir_->is_connected())
 			{
-				g_indir_->mst_prim_al(0);
+				g_indir_->mst_prim_al();
 			}
 			else
 			{
@@ -395,7 +395,7 @@ void program::run_prim_menu()
 		case '2':
 			if (g_indir_->is_connected())
 			{
-				g_indir_->mst_prim_im(0);
+				g_indir_->mst_prim_im();
 			}
 			else
 			{
@@ -480,20 +480,60 @@ void program::run_dijkstra_menu()
 
 		switch (option) {
 		case '1':
-			//if (g_dir_->is_connected())
-			//{
-			//	g_dir_->spf_dijkstra_al(0, 5);
-			//}
-			//else
-			//{
-			//	std::cout << "Blad: ";
-			//	std::cout << "Graf nie jest spojny lub nie istnieje!" << std::endl;
-			//	std::cout << "Algorytm Prima przerwany!" << std::endl;
-			//}
+			if (g_dir_->is_connected())
+			{
+				int v_start = 0;
+				int v_end = 0;
+				std::cout << "Podaj wierzcholek poczatkowy: ";
+				std::cin >> v_start;
+				std::cout << "Podaj wierzcholek koncowy (-1 wyswietlenie drog do wszystkich wierzcholkow): ";
+				std::cin >> v_end;
+
+				try
+				{
+					g_dir_->spf_dijkstra_al(v_start, v_end);
+				}catch(graph_exception& e)
+				{
+					std::cout << "Blad: ";
+					std::cout << e.what() << std::endl;
+					std::cout << "Algorytm Dijkstry przerwany!" << std::endl;
+				}	
+			}
+			else
+			{
+				std::cout << "Blad: ";
+				std::cout << "Graf nie jest spojny lub nie istnieje!" << std::endl;
+				std::cout << "Algorytm Dijkstry przerwany!" << std::endl;
+			}
 			wait_for_key();
 			break;
 		case '2':
+			if (g_dir_->is_connected())
+			{
+				int v_start = 0;
+				int v_end = 0;
+				std::cout << "Podaj wierzcholek poczatkowy: ";
+				std::cin >> v_start;
+				std::cout << "Podaj wierzcholek koncowy (-1 wyswietlenie drog do wszystkich wierzcholkow): ";
+				std::cin >> v_end;
 
+				try
+				{
+					g_dir_->spf_dijkstra_im(v_start, v_end);
+				}
+				catch (graph_exception& e)
+				{
+					std::cout << "Blad: ";
+					std::cout << e.what() << std::endl;
+					std::cout << "Algorytm Dijkstry przerwany!" << std::endl;
+				}
+			}
+			else
+			{
+				std::cout << "Blad: ";
+				std::cout << "Graf nie jest spojny lub nie istnieje!" << std::endl;
+				std::cout << "Algorytm Dijkstry przerwany!" << std::endl;
+			}
 			wait_for_key();
 			break;
 		default:
@@ -505,6 +545,84 @@ void program::run_dijkstra_menu()
 
 void program::run_ford_bellman_menu()
 {
+	char option;
+	do {
+		system("cls");
+		std::cout << std::endl;
+		std::cout << "================= ALGORYTM FORDA-BELLMANA ==============" << std::endl;
+		std::cout << "0.Powrot" << std::endl;
+		std::cout << "--------------------------------------------------------" << std::endl;
+		std::cout << "1.Wykonaj na reprezentacji listowej" << std::endl;
+		std::cout << "2.Wykonaj na reprezentacji macierzowej" << std::endl;
+		std::cout << "========================================================" << std::endl;
+		std::cout << "Podaj opcje:";
+		option = _getche();
+		std::cout << std::endl;
+
+		switch (option) {
+		case '1':
+			if (g_dir_->is_connected())
+			{
+				int v_start = 0;
+				int v_end = 0;
+				std::cout << "Podaj wierzcholek poczatkowy: ";
+				std::cin >> v_start;
+				std::cout << "Podaj wierzcholek koncowy (-1 wyswietlenie drog do wszystkich wierzcholkow): ";
+				std::cin >> v_end;
+
+				try
+				{
+					g_dir_->spf_ford_bellman_al(v_start, v_end);
+				}
+				catch (graph_exception& e)
+				{
+					std::cout << "Blad: ";
+					std::cout << e.what() << std::endl;
+					std::cout << "Algorytm Forda-Bellmana przerwany!" << std::endl;
+				}
+			}
+			else
+			{
+				std::cout << "Blad: ";
+				std::cout << "Graf nie jest spojny lub nie istnieje!" << std::endl;
+				std::cout << "Algorytm Forda-Bellmana przerwany!" << std::endl;
+			}
+			wait_for_key();
+			break;
+		case '2':
+			if (g_dir_->is_connected())
+			{
+				int v_start = 0;
+				int v_end = 0;
+				std::cout << "Podaj wierzcholek poczatkowy: ";
+				std::cin >> v_start;
+				std::cout << "Podaj wierzcholek koncowy (-1 wyswietlenie drog do wszystkich wierzcholkow): ";
+				std::cin >> v_end;
+
+				try
+				{
+					g_dir_->spf_ford_bellman_im(v_start, v_end);
+				}
+				catch (graph_exception& e)
+				{
+					std::cout << "Blad: ";
+					std::cout << e.what() << std::endl;
+					std::cout << "Algorytm Forda-Bellmana przerwany!" << std::endl;
+				}
+			}
+			else
+			{
+				std::cout << "Blad: ";
+				std::cout << "Graf nie jest spojny lub nie istnieje!" << std::endl;
+				std::cout << "Algorytm Forda-Bellmana przerwany!" << std::endl;
+			}
+			wait_for_key();
+			break;
+		default:
+			break;
+		}
+
+	} while (option != '0');
 }
 
 void program::wait_for_key()

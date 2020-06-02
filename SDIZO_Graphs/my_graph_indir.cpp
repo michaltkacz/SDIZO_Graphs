@@ -123,10 +123,27 @@ bool my_graph_indir::is_connected()
 		return false;
 	}
 
-	std::cout << "G_al_indir: " << g_al_indir_->is_connected() << std::endl;
-	std::cout << "G_im_indir: " << g_im_indir_->is_connected() << std::endl;
-
 	return g_al_indir_->is_connected();
+}
+
+void my_graph_indir::mst_prim_al(int v_start)
+{
+	g_al_indir_->mst_prim(v_start);
+}
+
+void my_graph_indir::mst_prim_im(int v_start)
+{
+	g_im_indir_->mst_prim(v_start);
+}
+
+void my_graph_indir::mst_kruskal_al()
+{
+	g_al_indir_->mst_kruskal();
+}
+
+void my_graph_indir::mst_kruskal_im()
+{
+	g_im_indir_->mst_kruskal();
 }
 
 void my_graph_indir::add_edge(int v_start, int v_end, int e_weight)

@@ -74,12 +74,6 @@
     <ClInclude Include="my_rand.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="i_graph_dir.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="i_graph_indir.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="a_graph_al.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -105,6 +99,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="my_graph_indir.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="i_graph_dir.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="i_graph_indir.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

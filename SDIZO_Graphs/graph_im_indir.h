@@ -13,6 +13,6 @@ public:
 	void print_graph() override;
 
 	void mst_prim(int v_start) override;
-	void mst_kruskal(int v_start) override;
+	void mst_kruskal() override;
 
 };

@@ -64,19 +64,19 @@ void program::run()
 			run_print_graph_menu();
 			break;
 		case '4':
-
+			run_prim_menu();
 			break;
 		case '5':
-
+			run_kruskal_menu();
 			break;
 		case '6':
-
+			run_dijkstra_menu();
 			break;
 		case '7':
-
+			run_ford_bellman_menu();
 			break;
 		case '9':
-			//run test
+			run_tests();
 			break;
 		case '0':
 			std::cout << "Koniec." << std::endl;
@@ -121,7 +121,15 @@ void program::run_graph_load_from_file_menu()
 				g_dir_->remove();
 				g_dir_->load_from_file(file_name);
 				std::cout << "Dane zostaly wczytane." << std::endl;
-				g_dir_->is_connected(); //todelete
+				if(!g_dir_->is_connected())
+				{
+					std::cout << "Uwaga: wczytany graf nie jest spojny!" << std::endl;
+				}
+				else
+				{
+					std::cout << "Graf jest spojny." << std::endl;
+				}
+				
 			}
 			catch (graph_exception& e)
 			{
@@ -143,8 +151,14 @@ void program::run_graph_load_from_file_menu()
 				g_indir_->remove();
 				g_indir_->load_from_file(file_name);
 				std::cout << "Dane zostaly wczytane." << std::endl;
-
-				g_indir_->is_connected(); //todelete
+				if (!g_indir_->is_connected())
+				{
+					std::cout << "Uwaga: wczytany graf nie jest spojny!" << std::endl;
+				}
+				else
+				{
+					std::cout << "Graf jest spojny." << std::endl;
+				}
 			}
 			catch (graph_exception& e)
 			{
@@ -237,8 +251,6 @@ void program::run_graph_generation_menu()
 				g_dir_->random();
 				g_dir_->print_parameters();
 				std::cout << "Graf zostal wygenerowany." << std::endl;
-
-				g_dir_->is_connected(); //todelete
 			}
 			catch (graph_exception& e)
 			{
@@ -255,8 +267,6 @@ void program::run_graph_generation_menu()
 				g_indir_->random();
 				g_indir_->print_parameters();
 				std::cout << "Graf zostal wygenerowany." << std::endl;
-				
-				g_indir_->is_connected(); //todelete
 			}
 			catch (graph_exception& e)
 			{
@@ -354,14 +364,143 @@ void program::run_print_graph_menu()
 
 void program::run_prim_menu()
 {
+	char option;
+	do {
+		system("cls");
+		std::cout << std::endl;
+		std::cout << "===================== ALGORYTM PRIMA ===================" << std::endl;
+		std::cout << "0.Powrot" << std::endl;
+		std::cout << "--------------------------------------------------------" << std::endl;
+		std::cout << "1.Wykonaj na reprezentacji listowej" << std::endl;
+		std::cout << "2.Wykonaj na reprezentacji macierzowej" << std::endl;
+		std::cout << "========================================================" << std::endl;
+		std::cout << "Podaj opcje:";
+		option = _getche();
+		std::cout << std::endl;
+
+		switch (option) {
+		case '1':
+			if(g_indir_->is_connected())
+			{
+				g_indir_->mst_prim_al(0);
+			}
+			else
+			{
+				std::cout << "Blad: ";
+				std::cout << "Graf nie jest spojny lub nie istnieje!" << std::endl;
+				std::cout << "Algorytm Prima przerwany!" << std::endl;
+			}
+			wait_for_key();
+			break;
+		case '2':
+			if (g_indir_->is_connected())
+			{
+				g_indir_->mst_prim_im(0);
+			}
+			else
+			{
+				std::cout << "Blad: ";
+				std::cout << "Graf nie jest spojny lub nie istnieje!" << std::endl;
+				std::cout << "Algorytm Prima przerwany!" << std::endl;
+			}
+			wait_for_key();
+			break;
+		default:
+			break;
+		}
+
+	} while (option != '0');
 }
 
 void program::run_kruskal_menu()
 {
+	char option;
+	do {
+		system("cls");
+		std::cout << std::endl;
+		std::cout << "==================== ALGORYTM KRUSKALA =================" << std::endl;
+		std::cout << "0.Powrot" << std::endl;
+		std::cout << "--------------------------------------------------------" << std::endl;
+		std::cout << "1.Wykonaj na reprezentacji listowej" << std::endl;
+		std::cout << "2.Wykonaj na reprezentacji macierzowej" << std::endl;
+		std::cout << "========================================================" << std::endl;
+		std::cout << "Podaj opcje:";
+		option = _getche();
+		std::cout << std::endl;
+
+		switch (option) {
+		case '1':
+			if (g_indir_->is_connected())
+			{
+				g_indir_->mst_kruskal_al();
+			}
+			else
+			{
+				std::cout << "Blad: ";
+				std::cout << "Graf nie jest spojny lub nie istnieje!" << std::endl;
+				std::cout << "Algorytm Kruskala przerwany!" << std::endl;
+			}
+			wait_for_key();
+			break;
+		case '2':
+			if (g_indir_->is_connected())
+			{
+				g_indir_->mst_kruskal_im();
+			}
+			else
+			{
+				std::cout << "Blad: ";
+				std::cout << "Graf nie jest spojny lub nie istnieje!" << std::endl;
+				std::cout << "Algorytm Kruskala przerwany!" << std::endl;
+			}
+			wait_for_key();
+			break;
+		default:
+			break;
+		}
+
+	} while (option != '0');
 }
 
 void program::run_dijkstra_menu()
 {
+	char option;
+	do {
+		system("cls");
+		std::cout << std::endl;
+		std::cout << "==================== ALGORYTM DIJKSTRY =================" << std::endl;
+		std::cout << "0.Powrot" << std::endl;
+		std::cout << "--------------------------------------------------------" << std::endl;
+		std::cout << "1.Wykonaj na reprezentacji listowej" << std::endl;
+		std::cout << "2.Wykonaj na reprezentacji macierzowej" << std::endl;
+		std::cout << "========================================================" << std::endl;
+		std::cout << "Podaj opcje:";
+		option = _getche();
+		std::cout << std::endl;
+
+		switch (option) {
+		case '1':
+			//if (g_dir_->is_connected())
+			//{
+			//	g_dir_->spf_dijkstra_al(0, 5);
+			//}
+			//else
+			//{
+			//	std::cout << "Blad: ";
+			//	std::cout << "Graf nie jest spojny lub nie istnieje!" << std::endl;
+			//	std::cout << "Algorytm Prima przerwany!" << std::endl;
+			//}
+			wait_for_key();
+			break;
+		case '2':
+
+			wait_for_key();
+			break;
+		default:
+			break;
+		}
+
+	} while (option != '0');
 }
 
 void program::run_ford_bellman_menu()

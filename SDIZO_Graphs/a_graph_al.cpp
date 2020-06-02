@@ -2,7 +2,6 @@
 #include "graph_exception.h"
 #include <iostream>
 #include <iomanip>
-#include <queue>
 
 
 a_graph_al::a_graph_al(int v, int e) : a_graph(v, e)
@@ -118,53 +117,3 @@ void a_graph_al::print_graph()
 	}
 	std::cout << std::endl;
 }
-
-//a_graph* a_graph_al::mst_prim(int v_start)
-//{
-//	using namespace std;
-//	const int NIL = -1;
-//	auto key = new int[v_];
-//	auto p = new int[v_];
-//	auto in_mst = new bool[v_];
-//	for(int i=0; i<v_; i++)
-//	{
-//		key[i] = INT_MAX;
-//		p[i] = NIL;
-//		in_mst[i] = false;
-//	}
-//
-//	priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
-//	key[v_start] = 0;
-//	pq.push(make_pair(key[v_start], v_start));
-//
-//	while(!pq.empty())
-//	{
-//		int u = pq.top().second;
-//		pq.pop();
-//		in_mst[u] = true;
-//
-//		auto adj_v = adj_list_[u];
-//		while(adj_v)
-//		{
-//			int v_end = adj_v->v_end;
-//			int weight = adj_v->weight;
-//
-//			if(in_mst[v_end] && weight < key[v_end])
-//			{
-//				key[v_end] = weight;
-//				p[v_end] = u;
-//				pq.push(make_pair(key[v_end], v_end));
-//			}
-//		}
-//	}
-//
-//	for(int i=0; i< v_; i++)
-//	{
-//		std::cout << p[i] << " - " << i << std::endl;
-//	}
-//
-//	delete[] key;
-//	delete[] p;
-//	delete[] in_mst;
-//	return nullptr;
-//}

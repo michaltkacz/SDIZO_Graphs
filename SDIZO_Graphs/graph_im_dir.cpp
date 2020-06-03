@@ -93,7 +93,6 @@ void graph_im_dir::spf_dijksra(int v_start, int v_end)
 		throw graph_exception("Wierzcholek koncowy nie istnieje");
 	}
 
-	using namespace std;
 	const int NIL = -1;
 	const int INF = 1000000;
 	auto d = new int[v_];
@@ -152,11 +151,13 @@ void graph_im_dir::spf_dijksra(int v_start, int v_end)
 
 	if (v_end == -1)
 	{
-		std::cout << "V poczatkowy | V koncowy | Droga" << std::endl;
+		std::cout << "Droga SPF(v start - v end: d)" << std::endl;
 		for (int i = 0; i < v_; i++)
 		{
 			std::cout << std::setw(3) << v_start;
+			std::cout << " - ";
 			std::cout << std::setw(3) << i;
+			std::cout << " : ";
 			if (d[i] == INF)
 			{
 				std::cout << std::setw(5) << "-" << std::endl;
@@ -198,5 +199,82 @@ void graph_im_dir::spf_ford_bellman(int v_start, int v_end)
 	{
 		throw graph_exception("Wierzcholek koncowy nie istnieje");
 	}
-	//TODO
+
+
+	const int NIL = -1;
+	const int INF = 1000000;
+	auto d = new int[v_];
+	auto p = new int[v_];
+	for (int i = 0; i < v_; i++)
+	{
+		d[i] = INF;
+		p[i] = NIL;
+	}
+	d[v_start] = 0;
+
+	for (int i=0; i<v_; i++)
+	{
+		for(int x=0; x<v_; x++)
+		{
+			for (int j=0; j<e_; j++)
+			{
+				if (inc_matrix_[x][j] != nullptr)
+				{
+					if (*inc_matrix_[x][j] >= 0)
+					{
+						for (int y=0; y<v_; y++)
+						{
+							if (y != i && inc_matrix_[y][j] != nullptr)
+							{
+								if (*inc_matrix_[y][j] <= 0)
+								{
+									if (d[y] > d[x] + *inc_matrix_[x][j])
+									{
+										d[y] = d[x] + *inc_matrix_[x][j];
+										p[y] = x;
+										break;
+									}
+								}
+							}
+						}
+					}
+				}
+			}	
+		}
+	}
+
+	if (v_end == -1)
+	{
+		std::cout << "Droga SPF(v start - v end: d)" << std::endl;
+		for (int i = 0; i < v_; i++)
+		{
+			std::cout << std::setw(3) << v_start;
+			std::cout << " - ";
+			std::cout << std::setw(3) << i;
+			std::cout << " : ";
+			if (d[i] == INF)
+			{
+				std::cout << std::setw(3) << "-" << std::endl;
+			}
+			else
+			{
+				std::cout << std::setw(3) << d[i] << std::endl;
+			}
+		}
+	}
+	else
+	{
+		std::cout << "Droga z wierzcholka " << v_start;
+		std::cout << " do wierzcholka " << v_end;
+		std::cout << " wynosi: ";
+		if (d[v_end] == INF)
+		{
+			std::cout << "-" << std::endl;
+		}
+		else
+		{
+			std::cout << d[v_end] << std::endl;
+		}
+	}
+
 }

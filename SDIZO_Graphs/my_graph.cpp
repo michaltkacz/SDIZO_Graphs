@@ -16,12 +16,22 @@ void my_graph::random(int v_number, int density)
 {
 	if (v_number < min_vert || v_number >= max_vert)
 	{
-		throw graph_exception("Liczba wierzcholkow poza zakresem! (5-50)");
+		std::string msg = "Liczba wierzcholkow poza zakresem! (";
+		msg += std::to_string(min_vert);
+		msg += "-";
+		msg += std::to_string(max_vert);
+		msg += ")";
+		throw graph_exception(msg.c_str());
 	}
 
 	if(density < min_dens || density >= max_dens)
 	{
-		throw graph_exception("Gestosc poza zakresem! (1%-99%)");
+		std::string msg = "Gestosc poza zakresem! (";
+		msg += std::to_string(min_dens);
+		msg += "-";
+		msg += std::to_string(max_dens);
+		msg += ")";
+		throw graph_exception(msg.c_str());
 	}
 
 }

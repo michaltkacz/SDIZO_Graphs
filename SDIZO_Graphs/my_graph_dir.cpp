@@ -85,7 +85,6 @@ void my_graph_dir::random(int v_number, int density)
 			}
 		}
 	} while (!g_im_dir_->is_connected());
-	std::cout << "Sukces" << std::endl;
 }
 
 void my_graph_dir::print_graph()
@@ -126,11 +125,11 @@ bool my_graph_dir::is_connected()
 	return g_im_dir_->is_connected();
 }
 
-void my_graph_dir::spf_dijkstra_al(int v_start, int v_end)
+void my_graph_dir::spf_dijkstra_al(int v_start, int v_end, bool test_performance)
 {
 	try
 	{
-		g_al_dir_->spf_dijksra(v_start, v_end);
+		g_al_dir_->spf_dijksra(v_start, v_end, test_performance);
 	}catch(graph_exception& e)
 	{
 		throw e;
@@ -138,11 +137,11 @@ void my_graph_dir::spf_dijkstra_al(int v_start, int v_end)
 	
 }
 
-void my_graph_dir::spf_dijkstra_im(int v_start, int v_end)
+void my_graph_dir::spf_dijkstra_im(int v_start, int v_end, bool test_performance)
 {
 	try
 	{
-		g_im_dir_->spf_dijksra(v_start, v_end);
+		g_im_dir_->spf_dijksra(v_start, v_end, test_performance);
 	}
 	catch (graph_exception& e)
 	{
@@ -150,11 +149,11 @@ void my_graph_dir::spf_dijkstra_im(int v_start, int v_end)
 	}
 }
 
-void my_graph_dir::spf_ford_bellman_al(int v_start, int v_end)
+void my_graph_dir::spf_ford_bellman_al(int v_start, int v_end, bool test_performance)
 {	
 	try
 	{
-		g_al_dir_->spf_ford_bellman(v_start, v_end);
+		g_al_dir_->spf_ford_bellman(v_start, v_end, test_performance);
 	}
 	catch (graph_exception& e)
 	{
@@ -162,11 +161,11 @@ void my_graph_dir::spf_ford_bellman_al(int v_start, int v_end)
 	}
 }
 
-void my_graph_dir::spf_ford_bellman_im(int v_start, int v_end)
+void my_graph_dir::spf_ford_bellman_im(int v_start, int v_end, bool test_performance)
 {
 	try
 	{
-		g_im_dir_->spf_ford_bellman(v_start, v_end);
+		g_im_dir_->spf_ford_bellman(v_start, v_end, test_performance);
 	}
 	catch (graph_exception& e)
 	{

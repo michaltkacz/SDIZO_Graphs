@@ -82,9 +82,7 @@ void my_graph_indir::random(int v_number, int density)
 				throw e;
 			}
 		}
-		std::cout << "Wygenerowano" << std::endl;
 	} while (!g_im_indir_->is_connected());
-	std::cout << "Sukces" << std::endl;
 }
 
 void my_graph_indir::print_graph()
@@ -126,24 +124,24 @@ bool my_graph_indir::is_connected()
 	return g_al_indir_->is_connected();
 }
 
-void my_graph_indir::mst_prim_al()
+void my_graph_indir::mst_prim_al(bool test_performance)
 {
-	g_al_indir_->mst_prim();
+	g_al_indir_->mst_prim(test_performance);
 }
 
-void my_graph_indir::mst_prim_im()
+void my_graph_indir::mst_prim_im(bool test_performance)
 {
-	g_im_indir_->mst_prim();
+	g_im_indir_->mst_prim(test_performance);
 }
 
-void my_graph_indir::mst_kruskal_al()
+void my_graph_indir::mst_kruskal_al(bool test_performance)
 {
-	g_al_indir_->mst_kruskal();
+	g_al_indir_->mst_kruskal(test_performance);
 }
 
-void my_graph_indir::mst_kruskal_im()
+void my_graph_indir::mst_kruskal_im(bool test_performance)
 {
-	g_im_indir_->mst_kruskal();
+	g_im_indir_->mst_kruskal(test_performance);
 }
 
 void my_graph_indir::add_edge(int v_start, int v_end, int e_weight)

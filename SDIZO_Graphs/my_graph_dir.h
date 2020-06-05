@@ -22,11 +22,11 @@ public:
 	bool exists() override;
 	bool is_connected() override;
 
-	void spf_dijkstra_al(int v_start, int v_end);
-	void spf_dijkstra_im(int v_start, int v_end);
+	void spf_dijkstra_al(int v_start, int v_end, bool test_performance = false);
+	void spf_dijkstra_im(int v_start, int v_end, bool test_performance = false);
 	
-	void spf_ford_bellman_al(int v_start, int v_end);
-	void spf_ford_bellman_im(int v_start, int v_end);
+	void spf_ford_bellman_al(int v_start, int v_end, bool test_performance = false);
+	void spf_ford_bellman_im(int v_start, int v_end, bool test_performance = false);
 
 
 protected:

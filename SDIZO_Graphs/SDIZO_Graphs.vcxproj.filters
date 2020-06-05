@@ -60,6 +60,9 @@
     <ClCompile Include="my_graph_indir.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="time_logger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="program.h">
@@ -105,6 +108,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="i_graph_indir.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="time_logger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

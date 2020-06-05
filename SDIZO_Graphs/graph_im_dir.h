@@ -12,6 +12,6 @@ public:
 	bool has_edge(int v_start, int v_end) override;
 	void print_graph() override;
 
-	void spf_dijksra(int v_start, int v_end) override;
-	void spf_ford_bellman(int v_start, int v_end) override;
+	void spf_dijksra(int v_start, int v_end, bool test_performance) override;
+	void spf_ford_bellman(int v_start, int v_end, bool test_performance) override;
 };

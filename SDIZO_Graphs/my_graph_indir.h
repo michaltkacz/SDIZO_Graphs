@@ -22,11 +22,11 @@ public:
 	bool exists() override;
 	bool is_connected() override;
 
-	void mst_prim_al();
-	void mst_prim_im();
+	void mst_prim_al(bool test_performance = false);
+	void mst_prim_im(bool test_performance = false);
 
-	void mst_kruskal_al();
-	void mst_kruskal_im();
+	void mst_kruskal_al(bool test_performance = false);
+	void mst_kruskal_im(bool test_performance = false);
 
 protected:
 	void add_edge(int v_start, int v_end, int e_weight) override;

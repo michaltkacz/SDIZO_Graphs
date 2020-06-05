@@ -78,7 +78,7 @@ void graph_im_indir::print_graph()
 	a_graph_im::print_graph();
 }
 
-void graph_im_indir::mst_prim()
+void graph_im_indir::mst_prim(bool test_performance)
 {
 	using namespace std;
 	const int NIL = -1;
@@ -123,22 +123,25 @@ void graph_im_indir::mst_prim()
 		}
 	}
 
-	int sum_weight = 0;
-	std::cout << "Lista krawedzi MST (v1 - v2; weight): " << std::endl;
-	for (int i = 1; i < v_; i++)
+	if(!test_performance)
 	{
-		std::cout << "(" << std::setw(3) << p[i] << " - " << std::setw(3) << i << "; ";
-		std::cout << std::setw(3) << key[i] << ")" << std::endl;
-		sum_weight += key[i];
+		int sum_weight = 0;
+		std::cout << "Lista krawedzi MST (v1 - v2; weight): " << std::endl;
+		for (int i = 1; i < v_; i++)
+		{
+			std::cout << "(" << std::setw(3) << p[i] << " - " << std::setw(3) << i << "; ";
+			std::cout << std::setw(3) << key[i] << ")" << std::endl;
+			sum_weight += key[i];
+		}
+		std::cout << "Waga MST: " << sum_weight << std::endl;
 	}
-	std::cout << "Waga MST: " << sum_weight << std::endl;
 
 	delete[] key;
 	delete[] p;
 	delete[] in_mst;
 }
 
-void graph_im_indir::mst_kruskal()
+void graph_im_indir::mst_kruskal(bool test_performance)
 {
 	std::vector<edge> edge_list;
 	for (int i = 0; i < e_; i++)
@@ -204,14 +207,17 @@ void graph_im_indir::mst_kruskal()
 		}
 	}
 
-	int sum_weight = 0;
-	for (int i = 0; i < e; i++)
+	if(!test_performance)
 	{
-		std::cout << "(" << std::setw(3) << result[i].v1 << " - " << std::setw(3) << result[i].v2 << "; ";
-		std::cout << std::setw(3) << result[i].w << ")" << std::endl;
-		sum_weight += result[i].w;
+		int sum_weight = 0;
+		for (int i = 0; i < e; i++)
+		{
+			std::cout << "(" << std::setw(3) << result[i].v1 << " - " << std::setw(3) << result[i].v2 << "; ";
+			std::cout << std::setw(3) << result[i].w << ")" << std::endl;
+			sum_weight += result[i].w;
+		}
+		std::cout << "Waga MST: " << sum_weight << std::endl;
 	}
-	std::cout << "Waga MST: " << sum_weight << std::endl;
 
 	delete[] subsets;
 	delete[] result;

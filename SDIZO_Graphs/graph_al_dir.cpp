@@ -58,7 +58,7 @@ void graph_al_dir::print_graph()
 	a_graph_al::print_graph();
 }
 
-void graph_al_dir::spf_dijksra(int v_start, int v_end)
+void graph_al_dir::spf_dijksra(int v_start, int v_end, bool test_performance)
 {
 	if(!a_graph::check_vertex_good(v_start))
 	{
@@ -111,37 +111,40 @@ void graph_al_dir::spf_dijksra(int v_start, int v_end)
 		}
 	}
 
-	if (v_end == -1)
+	if (!test_performance)
 	{
-		std::cout << "Droga SPF(v start - v end: d)" << std::endl;
-		for (int i = 0; i < v_; i++)
+		if (v_end == -1)
 		{
-			std::cout << std::setw(3) << v_start;
-			std::cout << " - ";
-			std::cout << std::setw(3) << i;
-			std::cout << " : ";
-			if (d[i] == INF)
+			std::cout << "Droga SPF(v start - v end: d)" << std::endl;
+			for (int i = 0; i < v_; i++)
 			{
-				std::cout << std::setw(3) << "-" << std::endl;
+				std::cout << std::setw(3) << v_start;
+				std::cout << " - ";
+				std::cout << std::setw(3) << i;
+				std::cout << " : ";
+				if (d[i] == INF)
+				{
+					std::cout << std::setw(3) << "-" << std::endl;
+				}
+				else
+				{
+					std::cout << std::setw(3) << d[i] << std::endl;
+				}
 			}
-			else
-			{
-				std::cout << std::setw(3) << d[i] << std::endl;
-			}
-		}
-	}
-	else
-	{
-		std::cout << "Droga z wierzcholka " << v_start;
-		std::cout << " do wierzcholka " << v_end;
-		std::cout << " wynosi: ";
-		if (d[v_end] == INF)
-		{
-			std::cout << "-" << std::endl;
 		}
 		else
 		{
-			std::cout << d[v_end] << std::endl;
+			std::cout << "Droga z wierzcholka " << v_start;
+			std::cout << " do wierzcholka " << v_end;
+			std::cout << " wynosi: ";
+			if (d[v_end] == INF)
+			{
+				std::cout << "-" << std::endl;
+			}
+			else
+			{
+				std::cout << d[v_end] << std::endl;
+			}
 		}
 	}
 
@@ -150,7 +153,7 @@ void graph_al_dir::spf_dijksra(int v_start, int v_end)
 	delete[] qs;
 }
 
-void graph_al_dir::spf_ford_bellman(int v_start, int v_end)
+void graph_al_dir::spf_ford_bellman(int v_start, int v_end, bool test_performance)
 {
 	if (!a_graph::check_vertex_good(v_start))
 	{
@@ -190,37 +193,43 @@ void graph_al_dir::spf_ford_bellman(int v_start, int v_end)
 		}
 	}
 
-	if (v_end == -1)
+	if (!test_performance)
 	{
-		std::cout << "Droga SPF(v start - v end: d)" << std::endl;
-		for (int i = 0; i < v_; i++)
+		if (v_end == -1)
 		{
-			std::cout << std::setw(3) << v_start;
-			std::cout << " - ";
-			std::cout << std::setw(3) << i;
-			std::cout << " : ";
-			if (d[i] == INF)
+			std::cout << "Droga SPF(v start - v end: d)" << std::endl;
+			for (int i = 0; i < v_; i++)
 			{
-				std::cout << std::setw(3) << "-" << std::endl;
+				std::cout << std::setw(3) << v_start;
+				std::cout << " - ";
+				std::cout << std::setw(3) << i;
+				std::cout << " : ";
+				if (d[i] == INF)
+				{
+					std::cout << std::setw(3) << "-" << std::endl;
+				}
+				else
+				{
+					std::cout << std::setw(3) << d[i] << std::endl;
+				}
 			}
-			else
-			{
-				std::cout << std::setw(3) << d[i] << std::endl;
-			}
-		}
-	}
-	else
-	{
-		std::cout << "Droga z wierzcholka " << v_start;
-		std::cout << " do wierzcholka " << v_end;
-		std::cout << " wynosi: ";
-		if (d[v_end] == INF)
-		{
-			std::cout << "-" << std::endl;
 		}
 		else
 		{
-			std::cout << d[v_end] << std::endl;
+			std::cout << "Droga z wierzcholka " << v_start;
+			std::cout << " do wierzcholka " << v_end;
+			std::cout << " wynosi: ";
+			if (d[v_end] == INF)
+			{
+				std::cout << "-" << std::endl;
+			}
+			else
+			{
+				std::cout << d[v_end] << std::endl;
+			}
 		}
 	}
+
+	delete[] d;
+	delete[] p;
 }

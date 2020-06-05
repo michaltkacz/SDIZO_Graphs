@@ -3,8 +3,8 @@
 class i_graph_indir
 {
 public:
-	virtual void mst_prim() = 0;
-	virtual void mst_kruskal() = 0;
+	virtual void mst_prim(bool test_performance) = 0;
+	virtual void mst_kruskal(bool test_performance) = 0;
 
 protected:
 	struct edge

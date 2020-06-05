@@ -166,6 +166,7 @@
     <ClCompile Include="my_rand.cpp" />
     <ClCompile Include="sdizo_graphs.cpp" />
     <ClCompile Include="program.cpp" />
+    <ClCompile Include="time_logger.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="a_graph.h" />
@@ -183,6 +184,7 @@
     <ClInclude Include="my_graph_indir.h" />
     <ClInclude Include="my_rand.h" />
     <ClInclude Include="program.h" />
+    <ClInclude Include="time_logger.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

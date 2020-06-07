@@ -28,7 +28,7 @@ protected:
 	const int max_dens = 100;
 
 	const int min_vert = 5;
-	const int max_vert = 201;
+	const int max_vert = 151;
 
 	const int min_weight = 0;
 	const int max_weight = 100;

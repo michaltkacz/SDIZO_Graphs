@@ -25,12 +25,13 @@ program::~program()
 
 void program::run()
 {
-	std::cout << "===================== UWAGA WSTEPNA =====================" << std::endl;
-	std::cout << "Opis dzialania poszczegolnych opcji oraz wszelkie" << std::endl;
-	std::cout << "zalozenia, ktore musza spelniac grafy zostaly opisane" << std::endl;
-	std::cout << "w zalaczonym do projektu sprawozdaniu. Przed rozpoczeciem" << std::endl;
-	std::cout << "testowania programu prosze o zapoznanie sie z dokumentem." << std::endl;
-	std::cout << "---------------------------------------------------------" << std::endl;
+	std::cout << "======================= UWAGA WSTEPNA ======================" << std::endl;
+	std::cout << "Opis dzialania poszczegolnych opcji oraz wszelkie zalozenia," << std::endl;
+	std::cout << "ktore musza spelniac dane zostaly opisane w zalaczonym" << std::endl;
+	std::cout << "do projektu sprawozdaniu w rozdziale \"Program\". Przed" << std::endl;
+	std::cout << "rozpoczeciem testowania programu prosze o zapoznanie sie" << std::endl;
+	std::cout << "z dokumentem." << std::endl;
+	std::cout << "------------------------------------------------------------" << std::endl;
 	wait_for_key();
 
 	char option;
@@ -108,7 +109,7 @@ void program::run_tests()
 	const int num_of_verts = 6;
 	const int vertices[] = { 25, 50, 75, 100, 125, 150 };
 	
-	const int num_of_repeats = 1;
+	const int num_of_repeats = 25;
 
 	double times_prim_al[num_of_dens][num_of_verts];
 	double times_prim_im[num_of_dens][num_of_verts];
@@ -437,7 +438,7 @@ void program::run_graph_generation_menu()
 		{
 			int v = 0;
 			int d = 0;
-			std::cout << "Podaj liczbe wierzcholkow (5-50)\nv=";
+			std::cout << "Podaj liczbe wierzcholkow (5-150)\nv=";
 			std::cin >> v;
 			std::cout << "Podaj gestosc(1-99)\nd=";
 			std::cin >> d;
@@ -461,7 +462,7 @@ void program::run_graph_generation_menu()
 		{
 			int v = 0;
 			int d = 0;
-			std::cout << "Podaj liczbe wierzcholkow (0-50)\nv=";
+			std::cout << "Podaj liczbe wierzcholkow (5-150)\nv=";
 			std::cin >> v;
 			std::cout << "Podaj gestosc(1-99)\nd=";
 			std::cin >> d;
@@ -531,7 +532,7 @@ void program::run_print_graph_menu()
 		std::cout << "--------------------------------------------------------" << std::endl;
 		std::cout << "1.Wyswietl graf skierowany" << std::endl;
 		std::cout << "2.Wyswietl graf nieskierowany" << std::endl;
-		std::cout << "2.Wyswietl oba grafy" << std::endl;
+		std::cout << "3.Wyswietl oba grafy" << std::endl;
 		std::cout << "========================================================" << std::endl;
 		std::cout << "Podaj opcje:";
 		option = _getche();
